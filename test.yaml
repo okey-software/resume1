@@ -1,0 +1,275 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/P4elll1991/domofonTesting/1.0.0
+info:
+  version: "1.0.0"
+  title: home-iot-api
+  description: The API for the EatBacon IOT project
+paths:
+    '/auth/sigin':
+      post: 
+        tags:
+          - auth 
+        operationId: logIn
+        description: авторизация (с капчей), если проверка пройдена, то возвращает токен
+        parameters: 
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+        responses: 
+          '200':
+             description: successful authorization
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/jwt'
+                    
+    '/auth/sigout':
+      post:
+        tags:
+          - auth
+        operationId: sigOut
+        description: выход
+        security:
+        - bearerAuth: []
+        responses: 
+          '200':
+             description: successful sigout
+
+    /auth/siginup:
+      post:
+        tags:
+          - auth
+        operationId: siginUp
+        description: регистрация нового пользователя		
+        parameters:
+          - in: query
+            name: siginup_form
+            required: true
+            schema:
+              $ref: '#/components/schemas/siginup_form'
+        responses:
+          '200':
+            description: Successful registration   
+      get:
+        tags:
+          - auth
+        operationId: siginUp
+        description: открытвает страницу регистрации
+        responses:
+          '200':
+            $ref: '#/components/responses/HTML'
+    /auth/check-email/{email}:
+      get:
+        tags:   
+          - auth
+        operationId: checkEmail  
+        description: проверка почты		
+        parameters:
+          - in: path
+            name: email
+            required: true
+            schema:
+             type: string
+        responses:
+          '200':
+            description: Successful registration
+
+    /auth/check-username/{username}:
+      get:
+        tags:   
+          - auth
+        operationId: checkingUsername
+        description: проверка свободно ли имя пользователя			
+        parameters:
+          - in: path
+            name: username	
+            required: true
+            schema:
+             type: string
+        responses:
+          '200':
+            description: Successful registration
+
+    /auth/confirm-email/{email}:
+      get:
+        tags:
+          - auth
+        operationId: mailConfirmation
+        description: подтверждение почты			
+        parameters:
+          - in: path
+            name: email
+            required: true
+            schema:
+              type: string
+        responses:
+              '200':
+                description: Successful registration    
+
+    /auth/access-token/{refreshToken}:
+      get:            
+        tags:
+          - auth
+        operationId: newToken
+        description: получение нового токена доступа по рефреш токену		 
+        security:
+        - bearerAuth: []
+        responses: 
+          '200':
+             description: successful receipt of the token
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/jwt' 
+
+    /auth/password:
+      delete:   
+        tags:  
+        - auth     
+        operationId: passwordReset
+        description: сброс пароля, отправляет на почту ссылку для установки нового пароля
+        security:
+        - bearerAuth: []
+        responses: 
+            '200':
+              description: successful reset password
+      post:
+        tags:
+        - auth 
+        operationId: settingNewpassword
+        description: установка нового пароля		       
+        security:
+        - bearerAuth: []
+        parameters: 
+        - name: new_password
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: reset_code
+          in: query
+          required: true
+          schema:
+            type: string
+        responses: 
+          '200':
+             description: successful setting a new password                   
+    
+    /auth/username:
+      put:
+        tags:
+        - auth 
+        operationId: newUsername
+        description: новое имя пользователя			       
+        security:
+        - bearerAuth: []
+        parameters: 
+        - name: new_name
+          in: query
+          required: true
+          schema:
+            type: string
+        responses: 
+          '200':
+             description: successful change new username
+
+    /auth/email:
+      put:
+        tags:
+        - auth 
+        operationId: newMail
+        description: новая почта					       
+        security:
+        - bearerAuth: []
+        parameters: 
+        - name: new_email
+          in: query
+          required: true
+          schema:
+            type: string
+        responses: 
+          '200':
+             description: successful change new username
+
+    /auth/delete:
+      delete:
+        tags:
+        - auth 
+        operationId: accountDeleting
+        description: удаление аккаунта							       
+        security:
+        - bearerAuth: []
+        responses: 
+          '200':
+             description: successful account deletion
+
+    /auth/delete/confirm{code}:
+      delete:
+        tags:
+        - auth 
+        operationId: account deletion confirmation
+        description: подтверждение удаления аккаунта								       
+        parameters:
+          - in: path
+            name: code
+            required: true
+            schema:
+              type: string
+        responses:
+              '200':
+                description: Successful registration 
+                
+                 
+
+
+
+
+
+
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+     description: Unauthorized
+     content:
+        text/html:
+          schema:
+            $ref: '#/components/schemas/Error'
+    HTML:
+     description: HTML
+     content:
+        text/html:
+          schema:
+            type: string
+  schemas:
+    siginup_form:
+      type: object
+    jwt:
+      type: object
+    deviceId:
+      type: string
+    # Schema for error response body
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
