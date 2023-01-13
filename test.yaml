@@ -472,7 +472,6 @@ paths:
         description: получение списка визиток		
         security:
           - bearerAuth: []
-          
         responses: 
           '200':
             description: successful upload 
@@ -521,23 +520,245 @@ paths:
                   schema:
                     $ref: '#/components/schemas/link' 
 
+    /cards/links/list:
+      get:
+        tags:
+        - constructor blocks
+        operationId: getting templates for blocks
+        description: получение шаблонов для блоков
+        security:
+        - bearerAuth: []
+        responses: 
+          '200':
+            description: successful receipt
+            content:
+              aplication/json:
+                schema:
+                  type: array 
+                  items: 
+                    $ref: '#/components/schemas/block' 
+
+    /cards/links/:
+      get:
+        tags:
+        - constructor blocks
+        operationId: getting block constructor template by id
+        description: получение шаблона конструктора блока по id		
+        security:
+        - bearerAuth: []
+        parameters:
+          - in: query
+            name: block_id
+            required: true
+            schema:
+                    $ref: '#/components/schemas/block'
+        responses: 
+          '200':
+             description: successful operation
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/block'
+      post:
+        tags:
+        - constructor blocks
+        operationId: adding a new block
+        description: добавление нового блока 		
+        security:
+        - bearerAuth: []
+        parameters:
+          - in: query
+            name: block
+            required: true
+            schema:
+              type: object
+          - in: path
+            name: card_id
+            required: true
+            schema:
+              type: string
+        responses: 
+          '200':
+             description: successful operation
+             content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/block'
+      put:
+        tags:
+        - constructor blocks
+        operationId: block editing
+        description: редактирование блока 				
+        security:
+        - bearerAuth: []
+        parameters:
+          - in: query
+            name: block
+            required: true
+            schema:
+              type: object
+        responses: 
+          '200':
+             description: successful operation
+             content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/block'
+
+      delete:
+        tags:
+        - constructor blocks
+        operationId: block removal
+        description: удаление						
+        security:
+        - bearerAuth: []
+        parameters:
+          - in: query
+            name: block
+            required: true
+            schema:
+                  type: array 
+                  items: 
+                    $ref: '#/components/schemas/block'
+        responses: 
+          '200':
+             description: successful operation
+
+    /contacts/list:
+      get:
+        tags:
+        - contacts
+        operationId: getting a list of contacts
+        description: получение списка кантактов		
+        security:
+        - bearerAuth: []
+        responses: 
+          '200':
+            description: successful upload
+            content:
+              aplication/json:
+                schema:
+                  type: array 
+                  items: 
+                    $ref: '#/components/schemas/contact' 
+
+    /contacts/list/extended:
+      get:
+        tags:
+        - contacts
+        operationId: getting an extended list of contacts grouped by groups
+        description: получение расширенного списка контактов, сгрупированных по группам			
+        security:
+        - bearerAuth: []
+        responses:
+          '200':
+             description: contacts list
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/contacts_extended' 
+
+    /contacts/: 
+      get:
+        tags:
+        - contacts
+        operationId: getting a contact
+        description: получение контакта				
+        security:
+        - bearerAuth: []
+        parameters:
+          - in: path
+            name: contact_id
+            required: true
+            schema:
+              type: string   
+        responses:
+          '200':
+            $ref: '#/components/responses/HTML'
 
 
+      post:
+        tags:
+        - contacts
+        operationId: creating a contact
+        description: создание контакта					
+        security:
+        - bearerAuth: []
+        parameters:
+          - in: query
+            name: contact
+            required: true
+            schema:
+              type: object
+        responses:
+          '200':
+             description: contact
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/contact' 
 
+      put:
+        tags:
+        - contacts
+        operationId: contact editing
+        description: редактирование контакта					
+        security:
+        - bearerAuth: []
+        parameters:
+          - in: query
+            name: contact
+            required: true
+            schema:
+              type: object
+        responses:
+          '200':
+             description: contact
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/contact' 
 
+      delete:
+        tags:
+        - contacts
+        operationId: delete (list)
+        description: удаление (списком)					
+        security:
+        - bearerAuth: []
+        parameters:
+          - in: query
+            name: contact
+            required: true
+            schema:
+                  type: array 
+                  items: 
+                    $ref: '#/components/schemas/contact'
+        responses: 
+          '200':
+             description: successful operation
 
-
-
-
-
-
-
-
-
-
-
-
-
+    /contacts/constructor:
+      get:
+        tags:
+        - contacts
+        operationId: getting a contact constructor
+        description: получение конструктора контакта					
+        security:
+        - bearerAuth: []  
+        parameters:
+          - in: path
+            name: contact_id
+            required: true
+            schema:
+              type: string 
+        responses:
+          '200':
+             description: contact
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/contact' 
 
 
 components:
@@ -580,6 +801,12 @@ components:
       type: string
     link:
       type: string
+    block:
+      type: object
+    contact: 
+      type: object
+    contacts_extended:
+      type: object
     # Schema for error response body
     Error:
       type: object
