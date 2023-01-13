@@ -68,6 +68,7 @@ paths:
         responses:
           '200':
             $ref: '#/components/responses/HTML'
+            
     /auth/check-email/{email}:
       get:
         tags:   
@@ -100,7 +101,7 @@ paths:
           '200':
             description: Successful registration
 
-    /auth/confirm-email/{email}:
+    /auth/confirm-email/{email_confirm_code}:
       get:
         tags:
           - auth
@@ -108,7 +109,7 @@ paths:
         description: подтверждение почты			
         parameters:
           - in: path
-            name: email
+            name: email_confirm_code 
             required: true
             schema:
               type: string
@@ -116,7 +117,7 @@ paths:
               '200':
                 description: Successful registration    
 
-    /auth/access-token/{refreshToken}:
+    /auth/access-token/{refresh_token}:
       get:            
         tags:
           - auth
@@ -213,7 +214,7 @@ paths:
           '200':
              description: successful account deletion
 
-    /auth/delete/confirm{code}:
+    /auth/delete/confirm{email_confirm_code}:
       delete:
         tags:
         - auth 
@@ -221,15 +222,318 @@ paths:
         description: подтверждение удаления аккаунта								       
         parameters:
           - in: path
-            name: code
+            name: email_confirm_code 
             required: true
             schema:
               type: string
         responses:
               '200':
-                description: Successful registration 
-                
-                 
+                description: successful operation
+
+    /home:
+      get:
+        tags:
+        - admin
+        operationId: homePage
+        description: домашняя страница
+        security:
+        - bearerAuth: []				
+        responses:
+          '200':
+            $ref: '#/components/responses/HTML' 
+
+    /user:
+      get:
+        tags:
+        - admin
+        operationId: userInformation
+        description: информация о пользователе 
+        security:
+        - bearerAuth: []				
+        responses:
+          '200':
+             description: User Information
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/user' 
+
+    /user/settings:
+      get:
+        tags:
+        - admin            
+        operationId: getting user settings
+        description: получение настроек пользователя
+        security:
+        - bearerAuth: []				
+        responses: 
+          '200':
+             description: successful authorization
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/user_settings'	                	               
+
+      put:
+        tags:
+        - admin            
+        operationId: user Settings
+        description: настройки пользователя		
+        security:
+        - bearerAuth: []	
+        parameters:
+          - in: query
+            name: user_settings
+            required: true
+            schema:
+                $ref: '#/components/schemas/user_settings'
+        responses: 
+          '200':
+             description: successful authorization
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/user_settings'	
+
+    /news/{article_id}/{lang}:
+      get:
+        tags:
+          - admin
+        operationId: news article
+        description: статья из новостей
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: article_id
+            required: true
+            schema:
+              type: string
+          - in: path
+            name: lang
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            $ref: '#/components/responses/HTML'
+
+      post: 
+        tags:
+        - admin 
+        operationId: adding an article
+        description: добавление статьи	
+        security:
+          - bearerAuth: [] 
+        parameters:
+          - in: query
+            name: article{}
+            required: true
+            schema:
+                $ref: '#/components/schemas/id'
+        responses:
+          '200':
+            description: article added successfully
+              
+      put:
+        tags:
+        - admin
+        operationId: article editing
+        description: редактирование статьи
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: query
+            name: article
+            required: true
+            schema:
+                    $ref: '#/components/schemas/article'
+        responses: 
+          '200':
+             description: successful authorization
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/article'
+      delete: 
+        tags:
+        - admin 
+        operationId: deleting an article
+        description: удаление статьи	
+        security:
+          - bearerAuth: [] 
+        parameters:
+          - in: query
+            name: article_id
+            required: true
+            schema:
+              type: string
+        responses:
+              '200':
+                description: successful operation
+
+    /cards/:
+      get:
+        tags:
+          - cards
+        operationId: business card page
+        description: страница визитки		
+        parameters:
+          - in: path
+            name: card_id
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            $ref: '#/components/responses/HTML'
+
+      post:
+        tags:
+          - cards
+        operationId: create a new business card
+        description: создание новой визитки	
+        parameters:
+          - in: query
+            name: card
+            required: true
+            schema:
+              type: string		
+        responses:
+          '200':
+             description: newcard 
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/card_id' 
+
+
+      put:
+        tags:
+          - cards
+        operationId: business card change
+        description: изменение визитки	
+        parameters:
+          - in: query
+            name: card
+            required: true
+            schema:
+              type: string		
+        responses:
+          '200':
+             description: card
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/card' 
+
+      delete:
+          tags:
+          - cards
+          operationId: business card removal
+          description: удаление визитки	
+          parameters:
+          - in: query
+            name: card_id
+            required: true
+            schema:
+              type: array 
+              items: 
+                $ref: '#/components/schemas/card_id' 
+          responses: 
+            '200':
+              description: business card removed
+
+    /cards/constructor:
+      get:
+        tags:
+        - cards
+        operationId: business card page
+        description: страница визитки
+        parameters:
+          - in: path
+            name: card
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+             description: card page
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/card' 
+
+    /cards/list:
+      get:
+        tags:
+        - cards
+        operationId: getting a list of business cards
+        description: получение списка визиток		
+        security:
+          - bearerAuth: []
+          
+        responses: 
+          '200':
+            description: successful upload 
+            content:
+              aplication/json:
+                schema:
+                  type: array 
+                  items: 
+                    $ref: '#/components/schemas/card'   
+
+    /cards/preview:
+      get:
+        tags:
+        - cards
+        operationId: preview by constructor structure
+        description: предпросмотр по структуре конструктора
+        security:
+          - bearerAuth: [] 		
+        parameters:
+          - in: path
+            name: cardconstructor_id
+            required: true
+            schema:
+              type: string   
+        responses:
+          '200':
+            $ref: '#/components/responses/HTML'
+
+    /cards/share:
+      get:
+        tags: 
+        - cards
+        operationId: sharing
+        description: шаринг 	
+        parameters:
+          - in: path
+            name: link
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+             description: sharing
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/link' 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -262,6 +566,20 @@ components:
       type: object
     deviceId:
       type: string
+    user:
+      type: object
+    user_settings:
+      type: object
+    id:
+      type: string
+    article:
+      type: object
+    card:
+      type: object
+    card_id:
+      type: string
+    link:
+      type: string
     # Schema for error response body
     Error:
       type: object
@@ -273,3 +591,4 @@ components:
       required:
         - code
         - message
+        
