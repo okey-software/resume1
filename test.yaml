@@ -503,7 +503,7 @@ paths:
           '200':
             $ref: '#/components/responses/HTML'
 
-    /cards/share/{link}:
+    /cards/share/{card_id}:
       get:
         tags: 
         - cards
@@ -511,7 +511,7 @@ paths:
         description: шаринг   
         parameters:
           - in: path
-            name: link
+            name: card_id
             required: true
             schema:
               type: string
@@ -763,6 +763,547 @@ paths:
                   schema:
                     $ref: '#/components/schemas/contact' 
 
+    /contacts/share/{contact_id}:
+      get:
+        tags:
+        - contacts
+        operationId: contact sharing
+        description: шаринг  контактов
+        security:
+        - bearerAuth: []    
+        parameters:
+          - in: path
+            name: contact_id
+            required: true
+            schema:
+              type: string 
+        responses:
+          '200':
+             description: sharing
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/link' 
+
+    /contacts/shared/{hash}:
+      get:
+        tags:
+        - contacts
+        operationId: getting a shared contact (by token - contact hash id)
+        description: получение расшаринного контакта (по токену - хеш id контакта)
+        security:
+        - bearerAuth: []  
+        parameters:
+        - in: path
+          name: hash
+          required: true
+          schema:
+            type: string 
+        responses:
+          '200':
+            $ref: '#/components/responses/HTML'
+
+      post:
+        tags:
+        - contacts
+        operationId: adding a shared contact ((by token - contact hash id)
+        description: добавление расшаринного контакта ((по токену - хеш id контакта)        
+        security:
+        - bearerAuth: []  
+        parameters:
+        - in: path
+          name: hash
+          required: true
+          schema:
+              type: string 
+        responses: 
+          '200':
+            description: successful operation  
+
+      
+    /contacts/links/list:
+      get:
+        tags:
+        - contacts
+        operationId: getting a list of templates for blocks
+        description: получение списка шаблонов для блоков            
+        security:
+        - bearerAuth: []   
+        responses: 
+              '200':
+                description: successful receipt
+                content:
+                  aplication/json:
+                    schema:
+                      type: array 
+                      items: 
+                        $ref: '#/components/schemas/block'
+      
+    /contacts/links/{block_id}: 
+      get:
+        tags:
+        - contacts
+        operationId: gettingBlock
+        description: получение шаблона конструктора блока по id              
+        security:
+        - bearerAuth: []
+        parameters:
+          - in: path
+            name: block_id
+            required: true
+            schema:
+              type: string  
+        responses:
+          '200':
+             description: block
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/block'
+
+    /contacts/links/:
+      post:
+        tags:
+        - contacts
+        operationId: newBlock
+        description: добавление нового блока                   
+        security:
+        - bearerAuth: []
+        parameters:
+          - in: query
+            name: block
+            required: true
+            schema:
+              type: object
+          - in: query
+            name: contact_id
+            required: true
+            schema:
+              type: string
+        responses: 
+          '200':
+             description: successful operation
+             content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/block'
+
+      put:
+        tags:
+        - contacts
+        operationId: blockEditing
+        description: редактирование блока 
+        security:
+        - bearerAuth: []     
+        parameters:
+          - in: query
+            name: block
+            required: true
+            schema:
+              type: object
+        responses: 
+          '200':
+             description: successful operation
+             content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/block'
+
+
+      delete:
+        tags:
+        - contacts
+        operationId: removal
+        description: удаление    
+        security:
+        - bearerAuth: []   
+        parameters:
+          - in: query
+            name: block_id
+            required: true
+            schema:
+                  type: array 
+                  items: 
+                    $ref: '#/components/schemas/block_id'
+        responses: 
+          '200':
+             description: successful operation
+
+    /groups/list:
+      get:
+        tags:
+        - contacts
+        operationId: getting a list of groups
+        description: получение списка групп		        
+        security:
+        - bearerAuth: []   
+        responses: 
+          '200':
+            description: successful receipt
+            content:
+              aplication/json:
+                schema:
+                  type: array 
+                  items: 
+                    $ref: '#/components/schemas/group'
+
+
+    groups/contacts/list/list{group_id}:
+      get:
+        tags:
+        - contacts
+        operationId: gettingList
+        description: получение списка кантактов по группе
+        security:
+        - bearerAuth: [] 
+        parameters:
+        - in: path
+          name: group_id
+          required: true 
+          schema:
+              type: string   
+        responses: 
+              '200':
+                description: successful receipt
+                content:
+                  application/json:
+                    schema:
+                      type: array 
+                      items: 
+                        $ref: '#/components/schemas/contact'
+
+      /groups/{group_id}: 
+        get:
+        tags:
+        - contacts
+        operationId: gettinglist
+        description: получение списка кантактов по группе
+        security:
+        - bearerAuth: [] 
+        parameters:
+        - in: path
+          name: group_id
+          required: true 
+          schema:
+              type: string 
+        responses: 
+          '200':
+             description: successful operation
+             content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/group'
+
+        post:
+          tags:
+          - contacts
+          operationId: creating a group
+          description: создание группы		
+          security:
+          - bearerAuth: []
+          parameters: 
+          - in: query
+            name: group
+            required: true
+            schema:
+              type: object
+          responses: 
+          '200':
+             description: successful operation
+             content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/group'
+
+        put:
+          tags:
+          - contacts
+          operationId: group editing
+          description: редактирование группы		
+          security:
+          - bearerAuth: [] 
+          parameters: 
+          - in: query
+            name: group
+            required: true
+            schema:
+              type: object
+          responses: 
+          '200':
+             description: successful operation
+             content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/group'
+
+        delete:
+          tags:
+          - contacts
+          operationId: removal
+          description: удаление		
+          security:
+          - bearerAuth: [] 
+          parameters:
+            - in: query
+              name: group
+              required: true
+              schema:
+                    type: array 
+                    items: 
+                      $ref: '#/components/schemas/group'
+          responses: 
+            '200':
+              description: successful operation
+
+
+    /groups/contacts/add:
+      post:
+        tags:
+        - contacts
+        operationId: add contacts to a group
+        description: добавить контакты к группе			
+        security:
+        - bearerAuth: [] 
+        parameters:
+        - in: query
+          name: contact_id
+          required: true
+          schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/contact_id'
+        - in: query
+          name: group_id
+          required: true
+          schema:
+            type: string
+        responses: 
+          '200':
+            description: successful operation
+
+    /groups/contacts/delete:
+      delete:
+        tags:
+        - contacts
+        operationId: remove contacts from a group
+        description: удалить контакты из группы					
+        security:
+        - bearerAuth: [] 
+        parameters:
+        - in: query
+          name: contact_id
+          required: true
+          schema:
+            type: array
+            items: 
+              $ref: '#/components/schemas/contact_id'
+        - in: query
+          name: group_id
+          required: true
+          schema:
+            type: string
+        responses: 
+          '200':
+            description: successful operation
+
+
+    /devices/list:
+      get:   
+        tags:
+        - devices
+        operationId: getting devices by user id
+        description: получение устройств по id пользователя							
+        security:
+        - bearerAuth: []   
+        responses: 
+          '200':
+            description: successful receipt
+            content:
+              aplication/json:
+                schema:
+                  type: array 
+                  items: 
+                    $ref: '#/components/schemas/device'
+
+    /devices/search:
+      get:   
+        tags:
+        - devices
+        operationId: receiving devices by parameters
+        description: получение устройств по параметрам (id пользователя, id заказа и т д ) - только для админов								
+        security:
+        - bearerAuth: []   
+        parameters:
+        - in: query
+          name: devices_search_parameters
+          required: true
+          schema:
+            type: string
+        responses: 
+          '200':
+            description: successful receipt
+            content:
+              aplication/json:
+                schema:
+                  type: array 
+                  items: 
+                    $ref: '#/components/schemas/device'
+
+
+    /devices/type/list:
+      get:
+        tags:
+        - devices
+        operationId: getting a list of device types
+        description: получение списка типов устройств									
+        security:
+        - bearerAuth: [] 
+        responses: 
+          '200':
+            description: successful receipt
+            content:
+              aplication/json:
+                schema:
+                  type: array 
+                  items: 
+                    $ref: '#/components/schemas/device_type'
+
+    /devices/types/{device_type_id}:
+      get:
+        tags:
+        - devices
+        operationId: get device type
+        description: получение типа устройства										
+        security:
+        - bearerAuth: [] 
+        parameters:
+        - in: path
+          name: device_type_id
+          required: true 
+          schema:
+              type: object
+        responses: 
+          '200':
+             description: successful operation
+             content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/device_type_id'
+
+    /devices/templates/list/{device_type_id}:
+      get:
+        tags:
+        - devices
+        operationId: getting device templates by device type
+        description: получение шаблонов устройств по типу устройства											
+        security:
+        - bearerAuth: [] 
+        parameters:
+        - in: path
+          name: device_type_id
+          required: true 
+          schema:
+                type: object
+        responses: 
+            '200':
+              description: successful receipt
+              content:
+                aplication/json:
+                  schema:
+                    type: array 
+                    items: 
+                      $ref: '#/components/schemas/device_template'
+
+    /devices/templates/{device_template_id}:
+      get:
+        tags:
+        - devices
+        operationId: get device template
+        description: получение шаблона устройства 		             
+        security:
+        - bearerAuth: []
+        parameters:
+          - in: path
+            name: device_template_id
+            required: true
+            schema:
+              type: string  
+        responses:
+          '200':
+             description: deviceTemplate
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/device_template'
+
+    /device/{device_id}:
+      get:
+        tags:
+        - devices
+        operationId: getDevice
+        description: обработка перехода по ссылке устройства 1. Если устройство не активировано 1.1. Если пользователь авторизован - переход на страницу активации устройства 1.1.Если пользователь не авторизован - переход на страницу регистрации и авторизации 2. Если устройство активировано - переход на страницу визитки	
+      parameters:
+      - in: path
+        name: device_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/responses/HTML'
+
+
+    /device/:
+      post:
+        tags:
+        - devices
+        operationId: device activation
+        description: активация устройства - по id устройства и id визитки		 
+        parameters: 
+        - name: device_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: card_id
+          in: query
+          required: true
+          schema:
+            type: string
+        responses: 
+          '200':
+            description: successful operation
+
+      put:
+        tags:
+        - devices
+        operationId: business card change
+        description: смена визитки, на которую устройство будет вести		
+        parameters: 
+        - name: device_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: card_id
+          in: query
+          required: true
+          schema:
+            type: string
+        responses: 
+          '200':
+            description: successful operation
+
+
+
+
+
+
+
 
 components:
   securitySchemes:
@@ -807,6 +1348,18 @@ components:
     contact: 
       type: object
     contacts_extended:
+      type: object
+    block_id:
+      type: object
+    group: 
+      type: object
+    device: 
+      type: object
+    device_type:
+      type: object
+    device_type_id: 
+      type: object
+    device_template:
       type: object
     # Schema for error response body
     Error:
