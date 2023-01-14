@@ -1,6 +1,9 @@
 openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/PENA101/okk/1.0.0
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/P4elll1991/domofonTesting/1.0.0
 info:
@@ -49,8 +52,8 @@ paths:
       post:
         tags:
           - auth
-        operationId: siginUp
-        description: регистрация нового пользователя		
+        operationId: New User Registration
+        description: регистрация нового пользователя    
         parameters:
           - in: query
             name: siginup_form
@@ -63,7 +66,7 @@ paths:
       get:
         tags:
           - auth
-        operationId: siginUp
+        operationId: opens the registration page
         description: открытвает страницу регистрации
         responses:
           '200':
@@ -74,7 +77,7 @@ paths:
         tags:   
           - auth
         operationId: checkEmail  
-        description: проверка почты		
+        description: проверка почты    
         parameters:
           - in: path
             name: email
@@ -90,10 +93,10 @@ paths:
         tags:   
           - auth
         operationId: checkingUsername
-        description: проверка свободно ли имя пользователя			
+        description: проверка свободно ли имя пользователя      
         parameters:
           - in: path
-            name: username	
+            name: username  
             required: true
             schema:
              type: string
@@ -106,7 +109,7 @@ paths:
         tags:
           - auth
         operationId: mailConfirmation
-        description: подтверждение почты			
+        description: подтверждение почты      
         parameters:
           - in: path
             name: email_confirm_code 
@@ -117,12 +120,12 @@ paths:
               '200':
                 description: Successful registration    
 
-    /auth/access-token/{refresh_token}:
+    /auth/access-token/:
       get:            
         tags:
           - auth
         operationId: newToken
-        description: получение нового токена доступа по рефреш токену		 
+        description: получение нового токена доступа по рефреш токену     
         security:
         - bearerAuth: []
         responses: 
@@ -148,7 +151,7 @@ paths:
         tags:
         - auth 
         operationId: settingNewpassword
-        description: установка нового пароля		       
+        description: установка нового пароля           
         security:
         - bearerAuth: []
         parameters: 
@@ -171,7 +174,7 @@ paths:
         tags:
         - auth 
         operationId: newUsername
-        description: новое имя пользователя			       
+        description: новое имя пользователя             
         security:
         - bearerAuth: []
         parameters: 
@@ -189,7 +192,7 @@ paths:
         tags:
         - auth 
         operationId: newMail
-        description: новая почта					       
+        description: новая почта                 
         security:
         - bearerAuth: []
         parameters: 
@@ -207,7 +210,7 @@ paths:
         tags:
         - auth 
         operationId: accountDeleting
-        description: удаление аккаунта							       
+        description: удаление аккаунта                     
         security:
         - bearerAuth: []
         responses: 
@@ -219,7 +222,7 @@ paths:
         tags:
         - auth 
         operationId: account deletion confirmation
-        description: подтверждение удаления аккаунта								       
+        description: подтверждение удаления аккаунта                       
         parameters:
           - in: path
             name: email_confirm_code 
@@ -237,7 +240,7 @@ paths:
         operationId: homePage
         description: домашняя страница
         security:
-        - bearerAuth: []				
+        - bearerAuth: []        
         responses:
           '200':
             $ref: '#/components/responses/HTML' 
@@ -249,7 +252,7 @@ paths:
         operationId: userInformation
         description: информация о пользователе 
         security:
-        - bearerAuth: []				
+        - bearerAuth: []        
         responses:
           '200':
              description: User Information
@@ -265,22 +268,22 @@ paths:
         operationId: getting user settings
         description: получение настроек пользователя
         security:
-        - bearerAuth: []				
+        - bearerAuth: []        
         responses: 
           '200':
              description: successful authorization
              content:
                 aplication/json:
                   schema:
-                    $ref: '#/components/schemas/user_settings'	                	               
+                    $ref: '#/components/schemas/user_settings'                                   
 
       put:
         tags:
         - admin            
         operationId: user Settings
-        description: настройки пользователя		
+        description: настройки пользователя    
         security:
-        - bearerAuth: []	
+        - bearerAuth: []  
         parameters:
           - in: query
             name: user_settings
@@ -293,7 +296,7 @@ paths:
              content:
                 aplication/json:
                   schema:
-                    $ref: '#/components/schemas/user_settings'	
+                    $ref: '#/components/schemas/user_settings'  
 
     /news/{article_id}/{lang}:
       get:
@@ -317,12 +320,12 @@ paths:
         responses:
           '200':
             $ref: '#/components/responses/HTML'
-
+    /news:
       post: 
         tags:
         - admin 
         operationId: adding an article
-        description: добавление статьи	
+        description: добавление статьи  
         security:
           - bearerAuth: [] 
         parameters:
@@ -359,7 +362,7 @@ paths:
         tags:
         - admin 
         operationId: deleting an article
-        description: удаление статьи	
+        description: удаление статьи  
         security:
           - bearerAuth: [] 
         parameters:
@@ -372,14 +375,14 @@ paths:
               '200':
                 description: successful operation
 
-    /cards/:
+    /cards/card_id:
       get:
         tags:
           - cards
         operationId: business card page
-        description: страница визитки		
+        description: страница визитки    
         parameters:
-          - in: path
+          - in: query 
             name: card_id
             required: true
             schema:
@@ -392,13 +395,13 @@ paths:
         tags:
           - cards
         operationId: create a new business card
-        description: создание новой визитки	
+        description: создание новой визитки  
         parameters:
           - in: query
             name: card
             required: true
             schema:
-              type: string		
+              type: string    
         responses:
           '200':
              description: newcard 
@@ -412,13 +415,13 @@ paths:
         tags:
           - cards
         operationId: business card change
-        description: изменение визитки	
+        description: изменение визитки  
         parameters:
           - in: query
             name: card
             required: true
             schema:
-              type: string		
+              type: string    
         responses:
           '200':
              description: card
@@ -431,7 +434,7 @@ paths:
           tags:
           - cards
           operationId: business card removal
-          description: удаление визитки	
+          description: удаление визитки  
           parameters:
           - in: query
             name: card_id
@@ -444,11 +447,11 @@ paths:
             '200':
               description: business card removed
 
-    /cards/constructor:
+    /cards/constructor/{card}:
       get:
         tags:
         - cards
-        operationId: business card page
+        operationId: card page
         description: страница визитки
         parameters:
           - in: path
@@ -469,7 +472,7 @@ paths:
         tags:
         - cards
         operationId: getting a list of business cards
-        description: получение списка визиток		
+        description: получение списка визиток    
         security:
           - bearerAuth: []
         responses: 
@@ -489,10 +492,10 @@ paths:
         operationId: preview by constructor structure
         description: предпросмотр по структуре конструктора
         security:
-          - bearerAuth: [] 		
+          - bearerAuth: []     
         parameters:
-          - in: path
-            name: cardconstructor_id
+          - in: query
+            name: card constructor
             required: true
             schema:
               type: string   
@@ -500,12 +503,12 @@ paths:
           '200':
             $ref: '#/components/responses/HTML'
 
-    /cards/share:
+    /cards/share/{link}:
       get:
         tags: 
         - cards
         operationId: sharing
-        description: шаринг 	
+        description: шаринг   
         parameters:
           - in: path
             name: link
@@ -543,7 +546,7 @@ paths:
         tags:
         - constructor blocks
         operationId: getting block constructor template by id
-        description: получение шаблона конструктора блока по id		
+        description: получение шаблона конструктора блока по id    
         security:
         - bearerAuth: []
         parameters:
@@ -563,7 +566,7 @@ paths:
         tags:
         - constructor blocks
         operationId: adding a new block
-        description: добавление нового блока 		
+        description: добавление нового блока     
         security:
         - bearerAuth: []
         parameters:
@@ -572,7 +575,7 @@ paths:
             required: true
             schema:
               type: object
-          - in: path
+          - in: query
             name: card_id
             required: true
             schema:
@@ -588,7 +591,7 @@ paths:
         tags:
         - constructor blocks
         operationId: block editing
-        description: редактирование блока 				
+        description: редактирование блока         
         security:
         - bearerAuth: []
         parameters:
@@ -609,7 +612,7 @@ paths:
         tags:
         - constructor blocks
         operationId: block removal
-        description: удаление						
+        description: удаление            
         security:
         - bearerAuth: []
         parameters:
@@ -629,7 +632,7 @@ paths:
         tags:
         - contacts
         operationId: getting a list of contacts
-        description: получение списка кантактов		
+        description: получение списка кантактов    
         security:
         - bearerAuth: []
         responses: 
@@ -647,7 +650,7 @@ paths:
         tags:
         - contacts
         operationId: getting an extended list of contacts grouped by groups
-        description: получение расширенного списка контактов, сгрупированных по группам			
+        description: получение расширенного списка контактов, сгрупированных по группам      
         security:
         - bearerAuth: []
         responses:
@@ -658,12 +661,12 @@ paths:
                   schema:
                     $ref: '#/components/schemas/contacts_extended' 
 
-    /contacts/: 
+    /contacts/{contact_id}: 
       get:
         tags:
         - contacts
         operationId: getting a contact
-        description: получение контакта				
+        description: получение контакта        
         security:
         - bearerAuth: []
         parameters:
@@ -676,12 +679,12 @@ paths:
           '200':
             $ref: '#/components/responses/HTML'
 
-
+    /contacts/:
       post:
         tags:
         - contacts
         operationId: creating a contact
-        description: создание контакта					
+        description: создание контакта          
         security:
         - bearerAuth: []
         parameters:
@@ -702,7 +705,7 @@ paths:
         tags:
         - contacts
         operationId: contact editing
-        description: редактирование контакта					
+        description: редактирование контакта          
         security:
         - bearerAuth: []
         parameters:
@@ -723,7 +726,7 @@ paths:
         tags:
         - contacts
         operationId: delete (list)
-        description: удаление (списком)					
+        description: удаление (списком)          
         security:
         - bearerAuth: []
         parameters:
@@ -738,12 +741,12 @@ paths:
           '200':
              description: successful operation
 
-    /contacts/constructor:
+    /contacts/constructor/{contact_id}:
       get:
         tags:
         - contacts
         operationId: getting a contact constructor
-        description: получение конструктора контакта					
+        description: получение конструктора контакта          
         security:
         - bearerAuth: []  
         parameters:
@@ -785,8 +788,6 @@ components:
       type: object
     jwt:
       type: object
-    deviceId:
-      type: string
     user:
       type: object
     user_settings:
@@ -818,4 +819,3 @@ components:
       required:
         - code
         - message
-        
