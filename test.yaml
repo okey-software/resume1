@@ -892,7 +892,7 @@ paths:
         tags:
         - contacts
         operationId: getting a list of groups
-        description: получение списка групп		        
+        description: получение списка групп            
         security:
         - bearerAuth: []   
         responses: 
@@ -904,7 +904,8 @@ paths:
                   type: array 
                   items: 
                     $ref: '#/components/schemas/group'
-    'groups/contacts/list/{group_id}':
+
+    '/contacts/list/{group_id}':
       get:
         tags:
         - contacts
@@ -930,31 +931,31 @@ paths:
 
     '/groups/{group_id}': 
         get:
-        tags:
-        - contacts
-        operationId: gettinglist
-        description: получение списка кантактов по группе
-        security:
-        - bearerAuth: [] 
-        parameters:
-        - in: path
-          name: group_id
-          required: true 
-          schema:
+          tags:
+          - contacts
+          operationId: gettinglist
+          description: получение списка кантактов по группе
+          security:
+          - bearerAuth: [] 
+          parameters:
+          - in: path
+            name: group_id
+            required: true 
+            schema:
               type: string 
-        responses: 
-          '200':
-             description: successful operation
-             content:
-                application/json:
-                  schema:
-                    $ref: '#/components/schemas/group'
-
+          responses: 
+            '200':
+                description: successful operation
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/group'
+    '/groups/':
         post:
           tags:
           - contacts
           operationId: creating a group
-          description: создание группы		
+          description: создание группы    
           security:
           - bearerAuth: []
           parameters: 
@@ -964,18 +965,18 @@ paths:
             schema:
               type: object
           responses: 
-          '200':
-             description: successful operation
-             content:
-                application/json:
-                  schema:
-                    $ref: '#/components/schemas/group'
+            '200':
+              description: successful operation
+              content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/group'
 
         put:
           tags:
           - contacts
           operationId: group editing
-          description: редактирование группы		
+          description: редактирование группы    
           security:
           - bearerAuth: [] 
           parameters: 
@@ -985,18 +986,17 @@ paths:
             schema:
               type: object
           responses: 
-          '200':
-             description: successful operation
-             content:
-                application/json:
-                  schema:
-                    $ref: '#/components/schemas/group'
-
+            '200':
+              description: successful operation
+              content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/group'
         delete:
           tags:
           - contacts
-          operationId: removal
-          description: удаление		
+          operationId: deleteContacts
+          description: удаление    
           security:
           - bearerAuth: [] 
           parameters:
@@ -1015,7 +1015,7 @@ paths:
         tags:
         - contacts
         operationId: add contacts to a group
-        description: добавить контакты к группе			
+        description: добавить контакты к группе      
         security:
         - bearerAuth: [] 
         parameters:
@@ -1039,7 +1039,7 @@ paths:
         tags:
         - contacts
         operationId: remove contacts from a group
-        description: удалить контакты из группы					
+        description: удалить контакты из группы          
         security:
         - bearerAuth: [] 
         parameters:
@@ -1063,7 +1063,7 @@ paths:
         tags:
         - devices
         operationId: getting devices by user id
-        description: получение устройств по id пользователя							
+        description: получение устройств по id пользователя              
         security:
         - bearerAuth: []   
         responses: 
@@ -1080,7 +1080,7 @@ paths:
         tags:
         - devices
         operationId: receiving devices by parameters
-        description: получение устройств по параметрам (id пользователя, id заказа и т д ) - только для админов								
+        description: получение устройств по параметрам (id пользователя, id заказа и т д ) - только для админов                
         security:
         - bearerAuth: []   
         parameters:
@@ -1103,7 +1103,7 @@ paths:
         tags:
         - devices
         operationId: getting a list of device types
-        description: получение списка типов устройств									
+        description: получение списка типов устройств                  
         security:
         - bearerAuth: [] 
         responses: 
@@ -1120,7 +1120,7 @@ paths:
         tags:
         - devices
         operationId: get device type
-        description: получение типа устройства										
+        description: получение типа устройства                    
         security:
         - bearerAuth: [] 
         parameters:
@@ -1141,7 +1141,7 @@ paths:
         tags:
         - devices
         operationId: getting device templates by device type
-        description: получение шаблонов устройств по типу устройства											
+        description: получение шаблонов устройств по типу устройства                      
         security:
         - bearerAuth: [] 
         parameters:
@@ -1164,7 +1164,7 @@ paths:
         tags:
         - devices
         operationId: get device template
-        description: получение шаблона устройства 		             
+        description: получение шаблона устройства                  
         security:
         - bearerAuth: []
         parameters:
@@ -1185,7 +1185,11 @@ paths:
         tags:
         - devices
         operationId: getDevice
-        description: обработка перехода по ссылке устройства 1. Если устройство не активировано 1.1. Если пользователь авторизован - переход на страницу активации устройства 1.1.Если пользователь не авторизован - переход на страницу регистрации и авторизации 2. Если устройство активировано - переход на страницу визитки	
+        description: обработка перехода по ссылке устройства 
+          - 1. Если устройство не активировано 
+          - 1.1. Если пользователь авторизован - переход на страницу активации устройства 
+          - 1.1.Если пользователь не авторизован - переход на страницу регистрации и авторизации 
+          - 2. Если устройство активировано - переход на страницу визитки  
         security:
           - bearerAuth: []
         parameters:
@@ -1196,11 +1200,8 @@ paths:
             type: string
         responses:
           '200':
-            description: successful operation
-            content:
-              text/html:
-                schema:
-                  $ref: '#/components/responses/HTML'
+             $ref: '#/components/responses/HTML'
+    '/device': 
       post:
         tags:
           - devices
@@ -1265,11 +1266,28 @@ paths:
                 application/json:
                   schema:
                     $ref: '#/components/schemas/order'
+        delete:
+          tags:
+            - store
+          operationId: deleting an order
+          description: удаление заказа    
+          security:
+            - bearerAuth: []
+          parameters:
+            - name: order_id
+              in: path
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: successful operation
+    '/order':
         post:
           tags:
             - store
           operationId: orderCreation
-          description: создание заказа		
+          description: создание заказа    
           security:
             - bearerAuth: []
           parameters:
@@ -1305,28 +1323,13 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/order'
-        delete:
-          tags:
-            - store
-          operationId: deleting an order
-          description: удаление заказа		
-          security:
-            - bearerAuth: []
-          parameters:
-            - name: order_id
-              in: path
-              required: true
-              schema:
-                type: string
-          responses:
-            '200':
-              description: successful operation
+
     '/order/list':
       get:
         tags:
           - store
         operationId: receivingUserorders
-        description: получение заказов пользователя		
+        description: получение заказов пользователя    
         security:
           - bearerAuth: []
         responses:
@@ -1353,36 +1356,32 @@ paths:
             required: true
             schema:
               type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            text/html:
-              schema:
-                $ref: '#/components/responses/HTML'
+        responses:
+          '200':
+            $ref: '#/components/responses/HTML'
     '/order/search':
       post: 
-      tags:
-        - store
-      operationId: getting a list of orders by parameters
-      description: получение списка заказов по параметрам (id пользователя, статус) -только для админов
-      security:
-        - bearerAuth: []
-      parameters:
-          name: order_search_parameters
+        tags:
+          - store
+        operationId: getting a list of orders by parameters
+        description: получение списка заказов по параметрам (id пользователя, статус) -только для админов
+        security:
+          - bearerAuth: []
+        parameters:
+        - name: order_search_parameters
           in: query
           required: true
           schema:
             type: object
-      responses:
-        '200':
-          description: "Successful operation"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/order'
+        responses:
+          '200':
+            description: "Successful operation"
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/order'
 
 
 
