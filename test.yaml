@@ -1025,7 +1025,7 @@ paths:
           schema:
                 type: array
                 items: 
-                  $ref: '#/components/schemas/contact_id'
+                  type: string
         - in: query
           name: group_id
           required: true
@@ -1049,7 +1049,7 @@ paths:
           schema:
             type: array
             items: 
-              $ref: '#/components/schemas/contact_id'
+              type: string
         - in: query
           name: group_id
           required: true
@@ -1372,7 +1372,7 @@ paths:
           in: query
           required: true
           schema:
-            type: object
+            $ref: '#/components/schemas/order_search_parameters'
         responses:
           '200':
             description: "Successful operation"
@@ -1441,20 +1441,14 @@ components:
       type: object
     contacts_extended:
       type: object
-    contact_id:
-      type: string
     block_id:
       type: object
     group: 
-      type: object
-    group_id: 
-      type: string  
+      type: object 
     device: 
       type: object
     device_type:
       type: object
-    device_type_id: 
-      type: string
     device_template:
       type: object
     order: 
