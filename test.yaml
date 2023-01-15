@@ -34,8 +34,7 @@ paths:
              content:
                 aplication/json:
                   schema:
-                    $ref: '#/components/schemas/jwt'
-                    
+                    $ref: '#/components/schemas/jwt'               
     '/auth/sigout':
       post:
         tags:
@@ -47,8 +46,7 @@ paths:
         responses: 
           '200':
              description: successful sigout
-
-    /auth/siginup:
+    '/auth/siginup':
       post:
         tags:
           - auth
@@ -70,9 +68,8 @@ paths:
         description: открытвает страницу регистрации
         responses:
           '200':
-            $ref: '#/components/responses/HTML'
-            
-    /auth/check-email/{email}:
+            $ref: '#/components/responses/HTML'           
+    '/auth/check-email/{email}':
       get:
         tags:   
           - auth
@@ -87,8 +84,7 @@ paths:
         responses:
           '200':
             description: Successful registration
-
-    /auth/check-username/{username}:
+    '/auth/check-username/{username}':
       get:
         tags:   
           - auth
@@ -103,8 +99,7 @@ paths:
         responses:
           '200':
             description: Successful registration
-
-    /auth/confirm-email/{email_confirm_code}:
+    '/auth/confirm-email/{email_confirm_code}':
       get:
         tags:
           - auth
@@ -119,8 +114,7 @@ paths:
         responses:
               '200':
                 description: Successful registration    
-
-    /auth/access-token/:
+    '/auth/access-token/':
       get:            
         tags:
           - auth
@@ -135,8 +129,7 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/jwt' 
-
-    /auth/password:
+    '/auth/password':
       delete:   
         tags:  
         - auth     
@@ -168,8 +161,7 @@ paths:
         responses: 
           '200':
              description: successful setting a new password                   
-    
-    /auth/username:
+    '/auth/username':
       put:
         tags:
         - auth 
@@ -186,8 +178,7 @@ paths:
         responses: 
           '200':
              description: successful change new username
-
-    /auth/email:
+    '/auth/email':
       put:
         tags:
         - auth 
@@ -204,8 +195,7 @@ paths:
         responses: 
           '200':
              description: successful change new username
-
-    /auth/delete:
+    '/auth/delete':
       delete:
         tags:
         - auth 
@@ -216,8 +206,7 @@ paths:
         responses: 
           '200':
              description: successful account deletion
-
-    /auth/delete/confirm{email_confirm_code}:
+    '/auth/delete/confirm{email_confirm_code}':
       delete:
         tags:
         - auth 
@@ -232,8 +221,7 @@ paths:
         responses:
               '200':
                 description: successful operation
-
-    /home:
+    '/home':
       get:
         tags:
         - admin
@@ -244,8 +232,7 @@ paths:
         responses:
           '200':
             $ref: '#/components/responses/HTML' 
-
-    /user:
+    '/user':
       get:
         tags:
         - admin
@@ -260,8 +247,7 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/user' 
-
-    /user/settings:
+    '/user/settings':
       get:
         tags:
         - admin            
@@ -276,7 +262,6 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/user_settings'                                   
-
       put:
         tags:
         - admin            
@@ -297,8 +282,7 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/user_settings'  
-
-    /news/{article_id}/{lang}:
+    '/news/{article_id}/{lang}':
       get:
         tags:
           - admin
@@ -320,7 +304,7 @@ paths:
         responses:
           '200':
             $ref: '#/components/responses/HTML'
-    /news:
+    '/news':
       post: 
         tags:
         - admin 
@@ -374,8 +358,7 @@ paths:
         responses:
               '200':
                 description: successful operation
-
-    /cards/card_id:
+    '/cards/card_id':
       get:
         tags:
           - cards
@@ -390,7 +373,6 @@ paths:
         responses:
           '200':
             $ref: '#/components/responses/HTML'
-
       post:
         tags:
           - cards
@@ -409,8 +391,6 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/card_id' 
-
-
       put:
         tags:
           - cards
@@ -429,7 +409,6 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/card' 
-
       delete:
           tags:
           - cards
@@ -446,8 +425,7 @@ paths:
           responses: 
             '200':
               description: business card removed
-
-    /cards/constructor/{card}:
+    '/cards/constructor/{card}':
       get:
         tags:
         - cards
@@ -466,8 +444,7 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/card' 
-
-    /cards/list:
+    '/cards/list':
       get:
         tags:
         - cards
@@ -484,8 +461,7 @@ paths:
                   type: array 
                   items: 
                     $ref: '#/components/schemas/card'   
-
-    /cards/preview:
+    '/cards/preview':
       get:
         tags:
         - cards
@@ -502,8 +478,7 @@ paths:
         responses:
           '200':
             $ref: '#/components/responses/HTML'
-
-    /cards/share/{card_id}:
+    '/cards/share/{card_id}':
       get:
         tags: 
         - cards
@@ -522,8 +497,7 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/link' 
-
-    /cards/links/list:
+    '/cards/links/list':
       get:
         tags:
         - constructor blocks
@@ -540,8 +514,7 @@ paths:
                   type: array 
                   items: 
                     $ref: '#/components/schemas/block' 
-
-    /cards/links/:
+    '/cards/links/':
       get:
         tags:
         - constructor blocks
@@ -607,7 +580,6 @@ paths:
                 application/json:
                   schema:
                     $ref: '#/components/schemas/block'
-
       delete:
         tags:
         - constructor blocks
@@ -626,8 +598,7 @@ paths:
         responses: 
           '200':
              description: successful operation
-
-    /contacts/list:
+    '/contacts/list':
       get:
         tags:
         - contacts
@@ -644,8 +615,7 @@ paths:
                   type: array 
                   items: 
                     $ref: '#/components/schemas/contact' 
-
-    /contacts/list/extended:
+    '/contacts/list/extended':
       get:
         tags:
         - contacts
@@ -660,8 +630,7 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/contacts_extended' 
-
-    /contacts/{contact_id}: 
+    '/contacts/{contact_id}': 
       get:
         tags:
         - contacts
@@ -678,8 +647,7 @@ paths:
         responses:
           '200':
             $ref: '#/components/responses/HTML'
-
-    /contacts/:
+    '/contacts/':
       post:
         tags:
         - contacts
@@ -700,7 +668,6 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/contact' 
-
       put:
         tags:
         - contacts
@@ -721,7 +688,6 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/contact' 
-
       delete:
         tags:
         - contacts
@@ -740,8 +706,7 @@ paths:
         responses: 
           '200':
              description: successful operation
-
-    /contacts/constructor/{contact_id}:
+    '/contacts/constructor/{contact_id}':
       get:
         tags:
         - contacts
@@ -762,8 +727,7 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/contact' 
-
-    /contacts/share/{contact_id}:
+    '/contacts/share/{contact_id}':
       get:
         tags:
         - contacts
@@ -784,8 +748,7 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/link' 
-
-    /contacts/shared/{hash}:
+    '/contacts/shared/{hash}':
       get:
         tags:
         - contacts
@@ -819,9 +782,7 @@ paths:
         responses: 
           '200':
             description: successful operation  
-
-      
-    /contacts/links/list:
+    '/contacts/links/list':
       get:
         tags:
         - contacts
@@ -838,8 +799,7 @@ paths:
                       type: array 
                       items: 
                         $ref: '#/components/schemas/block'
-      
-    /contacts/links/{block_id}: 
+    '/contacts/links/{block_id}': 
       get:
         tags:
         - contacts
@@ -860,8 +820,7 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/block'
-
-    /contacts/links/:
+    '/contacts/links/':
       post:
         tags:
         - contacts
@@ -928,8 +887,7 @@ paths:
         responses: 
           '200':
              description: successful operation
-
-    /groups/list:
+    '/groups/list':
       get:
         tags:
         - contacts
@@ -946,9 +904,7 @@ paths:
                   type: array 
                   items: 
                     $ref: '#/components/schemas/group'
-
-
-    groups/contacts/list/list{group_id}:
+    'groups/contacts/list/{group_id}':
       get:
         tags:
         - contacts
@@ -972,7 +928,7 @@ paths:
                       items: 
                         $ref: '#/components/schemas/contact'
 
-      /groups/{group_id}: 
+    '/groups/{group_id}': 
         get:
         tags:
         - contacts
@@ -1054,9 +1010,7 @@ paths:
           responses: 
             '200':
               description: successful operation
-
-
-    /groups/contacts/add:
+    '/groups/contacts/add':
       post:
         tags:
         - contacts
@@ -1080,8 +1034,7 @@ paths:
         responses: 
           '200':
             description: successful operation
-
-    /groups/contacts/delete:
+    '/groups/contacts/delete':
       delete:
         tags:
         - contacts
@@ -1105,9 +1058,7 @@ paths:
         responses: 
           '200':
             description: successful operation
-
-
-    /devices/list:
+    '/devices/list':
       get:   
         tags:
         - devices
@@ -1124,8 +1075,7 @@ paths:
                   type: array 
                   items: 
                     $ref: '#/components/schemas/device'
-
-    /devices/search:
+    '/devices/search':
       get:   
         tags:
         - devices
@@ -1148,9 +1098,7 @@ paths:
                   type: array 
                   items: 
                     $ref: '#/components/schemas/device'
-
-
-    /devices/type/list:
+    '/devices/type/list':
       get:
         tags:
         - devices
@@ -1167,8 +1115,7 @@ paths:
                   type: array 
                   items: 
                     $ref: '#/components/schemas/device_type'
-
-    /devices/types/{device_type_id}:
+    '/devices/types/{device_type_id}':
       get:
         tags:
         - devices
@@ -1181,16 +1128,15 @@ paths:
           name: device_type_id
           required: true 
           schema:
-              type: object
+              type: string
         responses: 
           '200':
              description: successful operation
              content:
                 application/json:
                   schema:
-                    $ref: '#/components/schemas/device_type_id'
-
-    /devices/templates/list/{device_type_id}:
+                    $ref: '#/components/schemas/device_type'
+    '/devices/templates/list/{device_type_id}':
       get:
         tags:
         - devices
@@ -1203,7 +1149,7 @@ paths:
           name: device_type_id
           required: true 
           schema:
-                type: object
+                type: string
         responses: 
             '200':
               description: successful receipt
@@ -1213,8 +1159,7 @@ paths:
                     type: array 
                     items: 
                       $ref: '#/components/schemas/device_template'
-
-    /devices/templates/{device_template_id}:
+    '/devices/templates/{device_template_id}':
       get:
         tags:
         - devices
@@ -1235,19 +1180,179 @@ paths:
                 aplication/json:
                   schema:
                     $ref: '#/components/schemas/device_template'
-
-    /device/{device_id}:
+    '/device/{device_id}':
       get:
         tags:
         - devices
         operationId: getDevice
         description: обработка перехода по ссылке устройства 1. Если устройство не активировано 1.1. Если пользователь авторизован - переход на страницу активации устройства 1.1.Если пользователь не авторизован - переход на страницу регистрации и авторизации 2. Если устройство активировано - переход на страницу визитки	
-      parameters:
-      - in: path
-        name: device_id
-        required: true
-        schema:
-          type: string
+        security:
+          - bearerAuth: []
+        parameters:
+        - in: path
+          name: device_id
+          required: true
+          schema:
+            type: string
+        responses:
+          '200':
+            description: successful operation
+            content:
+              text/html:
+                schema:
+                  $ref: '#/components/responses/HTML'
+      post:
+        tags:
+          - devices
+        operationId: device activation
+        description: активация устройства - по id устройства и id визитки
+        security:
+          - bearerAuth: []
+        parameters:
+          - name: device_id
+            in: query
+            required: true
+            schema:
+              type: string
+          - name: card_id
+            in: query
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: successful operation
+      put:
+        tags:
+          - devices
+        operationId: businessCardchange
+        description: смена визитки, на которую устройство будет вести
+        security:
+          - bearerAuth: []
+        parameters:
+          - name: device_id
+            in: query
+            required: true
+            schema:
+              type: string
+          - name: card_id
+            in: query
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: successful operation
+
+    '/order/{order_id}':
+        get:
+          tags:
+            - store
+          operationId: getOrderStructure
+          description: получение структуры заказа
+          security:
+            - bearerAuth: []
+          parameters:
+            - name: order_id
+              in: path
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: Successful operation
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/order'
+        post:
+          tags:
+            - store
+          operationId: orderCreation
+          description: создание заказа		
+          security:
+            - bearerAuth: []
+          parameters:
+            - in: query
+              name: order
+              required: true
+              schema:
+                type: object
+          responses:
+            '200':
+              description: orderStructures
+              content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/order'
+        put:
+          tags:
+            - store
+          operationId: orderChange
+          description: изменение заказа
+          security:
+            - bearerAuth: []
+          parameters:
+            - in: query
+              name: order
+              required: true
+              schema:
+                type: object
+          responses:
+            '200':
+              description: order change
+              content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/order'
+        delete:
+          tags:
+            - store
+          operationId: deleting an order
+          description: удаление заказа		
+          security:
+            - bearerAuth: []
+          parameters:
+            - name: order_id
+              in: path
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: successful operation
+    '/order/list':
+      get:
+        tags:
+          - store
+        operationId: receivingUserorders
+        description: получение заказов пользователя		
+        security:
+          - bearerAuth: []
+        responses:
+          '200':
+            description: "Successful operation"
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/order'
+
+    '/order/completion/{order_id}':
+      get:
+        tags:
+        - store
+        operationId: orderCompletionpage
+        description: страница завершения заказ
+        security:
+          - bearerAuth: []
+        parameters:
+          - name: order_id
+            in: path
+            required: true
+            schema:
+              type: string
       responses:
         '200':
           description: successful operation
@@ -1255,48 +1360,36 @@ paths:
             text/html:
               schema:
                 $ref: '#/components/responses/HTML'
+    '/order/search':
+      post: 
+      tags:
+        - store
+      operationId: getting a list of orders by parameters
+      description: получение списка заказов по параметрам (id пользователя, статус) -только для админов
+      security:
+        - bearerAuth: []
+      parameters:
+          name: order_search_parameters
+          in: query
+          required: true
+          schema:
+            type: object
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/order'
 
 
-    /device/:
-      post:
-        tags:
-        - devices
-        operationId: device activation
-        description: активация устройства - по id устройства и id визитки		 
-        parameters: 
-        - name: device_id
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: card_id
-          in: query
-          required: true
-          schema:
-            type: string
-        responses: 
-          '200':
-            description: successful operation
 
-      put:
-        tags:
-        - devices
-        operationId: business card change
-        description: смена визитки, на которую устройство будет вести		
-        parameters: 
-        - name: device_id
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: card_id
-          in: query
-          required: true
-          schema:
-            type: string
-        responses: 
-          '200':
-            description: successful operation
+
+
+
+
 
 
 
@@ -1349,17 +1442,25 @@ components:
       type: object
     contacts_extended:
       type: object
+    contact_id:
+      type: string
     block_id:
       type: object
     group: 
       type: object
+    group_id: 
+      type: string  
     device: 
       type: object
     device_type:
       type: object
     device_type_id: 
-      type: object
+      type: string
     device_template:
+      type: object
+    order: 
+      type: object
+    order_search_parameters:
       type: object
     # Schema for error response body
     Error:
