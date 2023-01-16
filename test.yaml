@@ -1383,17 +1383,502 @@ paths:
                   items:
                     $ref: '#/components/schemas/order'
 
+    '/pays/notification/ios':
+      post:
+        tags:
+        - pays
+        operationId: AppStore
+        description: уведомление об оплате с сервера App Store		
+        parameters:
+          - name: app_store_request
+            in: query
+            required: true
+            schema:
+                type: object
+        responses:
+          '200':
+            $ref: '#/components/schemas/app_store_response'
 
+    '/pays/':
+      post: 
+        tags:
+        - pays
+        operationId: payMent
+        description: оплата		
+        security:
+          - bearerAuth: []
+        parameters:
+          - name: invoice
+            in: query
+            required: true
+            schema:
+              type: object
+        responses:
+          '200':
+              description: successful operation   
 
+    '/pays/push/':
+      post: 
+        tags:
+        - pays
+        operationId: registrationOfpayment
+        description: подтверждение (регистрация) платежа		
+        parameters:
+        - name: pay_push_parameters
+          in: query
+          required: true
+          schema:
+            type: object
+        responses:
+          '200':
+            description: successful operation   
+            content:
+              application/json:
+                schema:
+                  type: integer
 
+    '/pays/check':
+      post: 
+        tags:
+        - pays
+        operationId: checkingPayments
+        description: проверка платежей				
+        parameters:
+        - name: pay_check_parameters
+          in: query
+          required: true
+          schema:
+            type: object
+        responses:
+          '200':
+            description: successful operation   
+            content:
+              application/json:
+                schema:
+                  type: integer        
 
+    '/pays/transactions/':
+      get: 
+        tags:
+        - pays
+        operationId: transactionSearch
+        description: поиск по транзакциям		      
+        security:
+          - bearerAuth: []
+        parameters:
+        - name: transaction_search_parameters
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/transaction_search_parameters'
+        responses:
+          '200':
+            description: "Successful operation"
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/transaction'
 
+    '/pays/list/':
+      get: 
+        tags:
+        - pays
+        operationId: searchbyPayments
+        description: поиск по платежам			      
+        security:
+          - bearerAuth: []
+        parameters:
+        - name: pays_search_parameters
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/pays_search_parameters'
+        responses:
+          '200':
+            description: "Successful operation"
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/pay'    
 
+    '/tariffs/list/':
+      get: 
+        tags:
+        - tariffs
+        operationId: getting a list of tariffs
+        description: получение списка тарифов		
+        responses:
+          '200':
+            description: "Successful operation"
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/tariff'          
 
+    '/tariffs/completion/':
+      get: 
+        tags:
+        - tariffs
+        operationId: connectionPage
+        description: страница завершения подключения по тарифу 		
+        security:
+          - bearerAuth: []
+        responses:
+          '200':
+             $ref: '#/components/responses/HTML'
 
+    '/tariffs/':
+        get:
+          tags:
+              - tariffs
+          operationId: receiving_a_tariff
+          description: получение тарифа
+          parameters:
+              - name: tariff_id
+                in: query
+                required: true
+                schema:
+                  type: string
+          responses:
+              '200':
+                  description: tariff
+                  content:
+                      application/json:
+                          schema:
+                              $ref: '#/components/schemas/tariff'
 
+    '/referrals/list':
+        get: 
+          tags:
+          - referrals
+          operationId: getting a list of referral programs
+          description: получение списка реферальных программ	
+          responses:
+              '200':
+                  description: "Successful operation"
+                  content:
+                    application/json:
+                      schema:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/rprogram' 	
+    
+    '/referrals/':
+        get:
+          tags:
+              - referrals
+          operationId: getting a description of the referral program
+          description: получение описания реферальной программы		
+          parameters:
+              - name: rprogram_id
+                in: query
+                required: true
+                schema:
+                  type: string    
+          responses:
+              '200':
+                  description: refprogram
+                  content:
+                      application/json:
+                          schema:
+                              $ref: '#/components/schemas/rprogram'
 
+    '/referrals/completion':
+      get:
+        tags:
+          - referrals
+        operationId: referral program completion page
+        description: страница завершения подключения по реферальной программе			
 
+    '/referrals/progress/':
+      get: 
+        tags:
+        - referrals
+        operationId: gettingProgress
+        description: получение прогресса				
+        security:
+          - bearerAuth: []
+        responses:
+            '200':
+                description: refprogress
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/rprogress' 
+
+    '/referrals/calculator/':  
+      get: 
+        tags:
+        - referrals
+        operationId: calculator
+        description: калькулятор			         
+        parameters:
+          - name: calculator_parameters
+            in: query
+            required: true
+            schema:
+                type: object
+        responses:
+            '200':
+                description: tariff
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/calculator_results'
+            
+
+    '/referrals/link/{hash}':
+      get: 
+        tags:
+        - referrals
+        operationId: referralLink
+        description: переход по реферальной ссылке	
+        parameters:
+          - name: hash
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            $ref: '#/components/responses/HTML'	
+
+    '/locals/list/':
+      get: 
+        tags:
+        - locals
+        operationId: getting a list of languages
+        description: получение списка языков			
+        responses:
+            '200':
+                description: "Successful operation"
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/lang' 
+
+    '/locals/{lang}':
+      get: 
+        tags:
+        - locals
+        operationId: get dictionary
+        description: получить словарь		 
+        parameters:
+          - in: path
+            name: lang
+            required: true
+            schema:
+              type: string 
+        responses:
+            '200':
+                description: key translation
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/vocabulary' 
+
+    '/locals/article/{lang}/{article_key}':
+      get: 
+        tags:
+        - locals
+        operationId: get dictionary
+        description: получить словарь	                       
+        parameters:
+          - in: path
+            name: lang
+            required: true
+            schema:
+              type: string
+          - in: path
+            name: article_key
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+             description: sharing
+             content:
+                aplication/json:
+                  schema:
+                    $ref: '#/components/schemas/text' 
+
+    '/locals/article':
+      post: 
+        tags:
+        - locals
+        operationId: add a translation for an article
+        description: добавить перевод для статьи			                       
+        parameters:
+          - in: query
+            name: lang
+            required: true
+            schema:
+              type: string
+          - in: query
+            name: article_key
+            required: true
+            schema:
+              type: string
+          - in: query
+            name: text
+            required: true
+            schema:
+              type: string
+        responses: 
+            '200':
+              description: successful authorization
+              content:
+                  aplication/json:
+                    schema:
+                      type: object
+                      properties:
+                        article_key:
+                          type: string
+                        text: 
+                          type: string
+      get: 
+        tags:
+        - locals
+        operationId: change the translation for an article
+        description: изменить перевод для статьи				                       
+        parameters:
+          - in: query
+            name: lang
+            required: true
+            schema:
+              type: string
+          - in: query
+            name: article_key
+            required: true
+            schema:
+              type: string
+          - in: query
+            name: text
+            required: true
+            schema:
+              type: string
+        responses: 
+            '200':
+              description: successful authorization
+              content:
+                  aplication/json:
+                    schema:
+                      type: object
+                      properties:
+                        article_key:
+                          type: string
+                        text: 
+                          type: string
+
+    '/support/':
+      post:
+        tags:
+        - support
+        operationId: sending a support ticket
+        description: отправка обращения в поддержку	
+        security:
+          - bearerAuth: []	 
+        parameters:
+        - in: query
+          name: support_message
+          required: true
+          schema:
+            type: object          
+        responses: 
+            '200':
+              description: successful authorization
+    
+    
+    '/support/faq/':
+      get:
+        tags:
+        - support
+        operationId: getting a list of frequently asked questions
+        description: получение списка часто задаваемых вопросов 		   
+        responses: 
+            '200':
+              description: successful authorization
+              content:
+                  aplication/json:
+                    schema:
+                      type: object 
+                      properties:
+                        faq:
+                          type: object 
+
+    '/link/{hash}':
+      get:
+        tags:
+        - links 
+        operationId: transition via temporary link
+        description: переход по временной ссылке	
+        parameters:
+          - in: path
+            name: hash
+            required: true
+            schema:
+              type: string         
+        responses:
+          '200':
+              $ref: '#/components/responses/HTML'	
+
+    '/audit/users/':
+      get:
+        tags:
+        - audit
+        operationId: search for custom events
+        description: поиск пользовательских событий	
+        security:
+          - bearerAuth: []	         	        
+        parameters:
+          - in: query
+            name: user_audit_search_parameters
+            required: true
+            schema:
+              type: object
+        responses:
+            '200':
+                description: "Successful operation"
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/user_event'               
+
+    '/audit/errors/':
+      get:
+        tags:
+        - audit
+        operationId: getting error logs
+        description: получение логов с ошибками		
+        security:
+          - bearerAuth: []    
+        parameters:
+          - in: query
+            name: error_audit_search_parametrs
+            required: true
+            schema:
+              type: object
+        responses:
+            '200':
+                description: "Successful operation"
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/error' 
 
 
 
@@ -1455,6 +1940,31 @@ components:
       type: object
     order_search_parameters:
       type: object
+    app_store_response:
+      type: object
+    transaction:
+      type: object
+    transaction_search_parameters:
+      type: object
+    pays_search_parameters:
+      type: object
+    pay: 
+      type: object
+    tariff: 
+      type: object
+    rprogram:
+      type: object
+    rprogress: 
+      type: object
+    calculator_results:
+      type: object
+    lang:
+      type: object
+    vocabulary:
+      type: object
+    user_event:
+     type: object
+    
     # Schema for error response body
     Error:
       type: object
